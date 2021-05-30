@@ -8,18 +8,18 @@ function EditPage(props) {
   const [TaskText, setTaskText] = React.useState("");
 
   React.useEffect(() => {
-    const Tasklist = userStore.Task;
+    let Tasklist = userStore.Task;
 
     setTaskText(Tasklist[index].Task);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [index]);
 
   const EditTask = (event) => {
 
     setTaskText(event)
 
-    const Tasklist = userStore.Task;
+    let Tasklist = userStore.Task;
 
     Tasklist.splice(index, 1, { Task: event });
 

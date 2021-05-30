@@ -2,6 +2,7 @@ import React from "react";
 import { UserStoreContext } from "../context/UserContext";
 import "./Home.css";
 import EditPage from "./EditPage";
+import ListOfTask from "./ListOfTask"
 
 const Home = () => {
   const userStore = React.useContext(UserStoreContext);
@@ -13,7 +14,8 @@ const Home = () => {
   const [EditIndex, setEditIndex] = React.useState(0);
 
   React.useEffect(() => {
-    const locallist = JSON.parse(localStorage.getItem("Task"));
+
+    let locallist = JSON.parse(localStorage.getItem("Task"));
 
     setListTask(locallist);
 
@@ -24,7 +26,7 @@ const Home = () => {
 
   React.useEffect(() => {
     
-    const locallist = JSON.parse(localStorage.getItem("Task"));
+    let locallist = JSON.parse(localStorage.getItem("Task"));
 
     setListTask(locallist);
 
@@ -36,7 +38,7 @@ const Home = () => {
 
   const setContext = () => {
     if (ListTask !== null) {
-      const newTodoList = [...ListTask, { Task }];
+      let newTodoList = [...ListTask, { Task }];
 
       setListTask(newTodoList);
 
@@ -45,7 +47,7 @@ const Home = () => {
       userStore.updateTask(newTodoList)
 
     } else {
-      const newTodoList = [{ Task }];
+      let newTodoList = [{ Task }];
 
       setListTask(newTodoList);
 
@@ -64,9 +66,11 @@ const Home = () => {
   };
 
   const onEdit = (index) => {
+
     userStore.updateOpenEdit(1);
 
     setEditIndex(index);
+    
   };
 
   return (
@@ -78,24 +82,13 @@ const Home = () => {
       </button>
       <br></br>
       {ListTask == null ? (
-        <div>
-        </div>
+        <>
+        </>
       ) : (
         <div className="todo">
           <>
             {ListTask.map((Task, index) => (
-              <div className="todolist" key={index}>
-                <label className="labeltodolist">{Task.Task}</label>
-
-                <div className="controlbtn">
-                  <button className="editbtn" onClick={() => onEdit(index)}>
-                    Edit
-                  </button>
-                  <button className="deletebtn" onClick={() => onDelete(index)}>
-                    Delete
-                  </button>
-                </div>
-              </div>
+              <ListOfTask  index={index} Task={Task} onEdit={onEdit} onDelete={onDelete}/>
             ))}
           </>
         </div>
